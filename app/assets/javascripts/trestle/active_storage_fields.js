@@ -26,6 +26,17 @@ TRESTLE_ACTIVE_STORAGE.attachEvents = (field) => {
         progressBarEl.style = "width: " + detail.progress + "%"
     })
     
+    
+    field.addEventListener("direct-upload:before-blob-request", (event) => {
+        console.log("direct-upload:before-blob-request")
+        console.log(event)
+    })
+    
+    field.addEventListener("direct-upload:before-storage-request", (event) => {
+        console.log("direct-upload:before-storage-request")
+        console.log(event)
+    })
+
     field.addEventListener("direct-upload:end", (event) => {
         console.log("direct-upload:end")
         console.log(event)

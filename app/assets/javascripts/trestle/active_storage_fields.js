@@ -27,7 +27,8 @@ TRESTLE_ACTIVE_STORAGE.attachEvents = (field) => {
     })
     
     field.addEventListener("direct-upload:end", (event) => {
-        debugger
+        console.log("direct-upload:end")
+        console.log(event)
     })
 }
 

@@ -17,11 +17,13 @@ TRESTLE_ACTIVE_STORAGE.attachEvents = (field) => {
 
     // Reveal the progress bar
     field.addEventListener("direct-upload:start", (event) => {
+        console.log("direct-upload:start")
         progressEl.style = "display: block"
     })
     
     // Increment the progress bar
     field.addEventListener("direct-upload:progress", (event) => {
+        console.log("direct-upload:progress")
         let detail = event.detail
         progressBarEl.style = "width: " + detail.progress + "%"
     })

@@ -7,7 +7,10 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
     console.log(`fields.length:`, fields.length)
     // console.log(`fields.length:`, fields.length)
     if (fields.length) {
-        debugger
+        fields.forEach((field, i) => {
+            let newClassName = `active-storage__field__${i}`
+            field.classList.add(newClassName)
+        })
     }
 
     for (var i = 0; i < fields.length; i++) {

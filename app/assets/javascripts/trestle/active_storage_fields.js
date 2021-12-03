@@ -4,7 +4,7 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
     let fields = document.querySelectorAll(".active-storage__field")
 
     for (var i = 0; i < fields.length; i++) {
-        attachEvents(fields[i])
+        TRESTLE_ACTIVE_STORAGE.attachEvents(fields[i])
     }
 }
 
@@ -25,5 +25,5 @@ TRESTLE_ACTIVE_STORAGE.attachEvents = (field) => {
 Trestle.ready(() => {
     console.log("Custom 'trestle-active_storage' loaded")
     window.TRESTLE_ACTIVE_STORAGE = TRESTLE_ACTIVE_STORAGE
-    TRESTLE_ACTIVE_STORAGE.init()
+    window.TRESTLE_ACTIVE_STORAGE.init()
 })

@@ -14,7 +14,7 @@
                     main_app.rails_blob_path(attachment, disposition: "attachment")
                 ) %>
             <% else %>
-                <%= link_to main_app.rails_blob_path(attachment, disposition: "attachment"), class: "btn btn-info" do %>
+                <%= link_to(main_app.rails_blob_path(attachment, disposition: "attachment"), class: "btn btn-info") do %>
                     <i class="fa fa-download"></i>
                     <span class="btn-label">Download <%= field_name %></span>
                 <% end %>

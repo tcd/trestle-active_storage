@@ -4,6 +4,7 @@ TRESTLE_ACTIVE_STORAGE = {}
 // Kick things off
 TRESTLE_ACTIVE_STORAGE.init = () => {
     let fields = document.querySelectorAll(".active-storage__field")
+    console.log(`fields.length:`, fields.length)
 
     for (var i = 0; i < fields.length; i++) {
         TRESTLE_ACTIVE_STORAGE.attachEvents(fields[i])

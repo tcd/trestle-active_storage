@@ -1,34 +1,8 @@
 // Make a namespace
 TRESTLE_ACTIVE_STORAGE = {}
 
-// Kick things off
-TRESTLE_ACTIVE_STORAGE.init = () => {
-    let fields = document.querySelectorAll(".active-storage__field")
-    console.log(`fields.length:`, fields.length)
-    if (fields.length) {
-        fields.forEach((field, i) => {
-            let newClassName = `active-storage__field__${i}`
-            field.classList.add(newClassName)
-            field.addEventListener("change", (event) => {
-                if (event?.target?.files?.length == 1) {
-                    let reader = new FileReader()
-                    let file = event.target.files[0]
-                    reader.onload = (event) => {
-                        let fileContent = event.target.result
-                        debugger
-                    }
-                    reader.onerror = (error) => {
-                        console.error(error)
-                    }
-                    reader.readAsDataURL(file)
-                }
-              })
-        })
-    }
-
-    for (var i = 0; i < fields.length; i++) {
-        TRESTLE_ACTIVE_STORAGE.attachEvents(fields[i])
-    }
+TRESTLE_ACTIVE_STORAGE.insertAfter = (existingElement, newElement) => {
+    existingElement.parentNode.insertBefore(newElement, existingElement.nextSibling)
 }
 
 // For each `.active-storage__field`
@@ -64,6 +38,40 @@ TRESTLE_ACTIVE_STORAGE.attachEvents = (field) => {
         console.log("direct-upload:end")
         console.log(event)
     })
+}
+
+// Kick things off
+TRESTLE_ACTIVE_STORAGE.init = () => {
+    let fields = document.querySelectorAll(".active-storage__field")
+    // console.log(`fields.length:`, fields.length)
+    if (fields.length) {
+        fields.forEach((field, i) => {
+            // let newClassName = `active-storage__field__${i}`
+            // field.classList.add(newClassName)
+            field.addEventListener("change", (event) => {
+                if (event?.target?.files?.length == 1) {
+                    let reader = new FileReader()
+                    let file = event.target.files[0]
+                    reader.onload = (event) => {
+                        let fileContent = event.target.result
+                        let preview = document.createElement("image")
+                        preview.src = fileContent
+                        let previewContainer = document.createElement("div")
+                        previewContainer.classList.add("active-storage__upload-preview")
+                        previewContainer.appendChild(preview)
+                        TRESTLE_ACTIVE_STORAGE.insertAfter(event.target, previewContainer)
+                        // debugger
+                    }
+                    reader.onerror = (error) => { console.error(error) }
+                    reader.readAsDataURL(file)
+                }
+            })
+        })
+    }
+
+    for (var i = 0; i < fields.length; i++) {
+        TRESTLE_ACTIVE_STORAGE.attachEvents(fields[i])
+    }
 }
 
 // Load the code

@@ -62,7 +62,6 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                 if (event1?.target?.files?.length == 1) {
                     let reader = new FileReader()
                     let file = event1.target.files[0]
-                    console.log(fileName)
                     debugger
                     reader.onload = function (event2) {
                         debugger

@@ -1,5 +1,6 @@
-// Make a namespace
 TrestleActiveStorage = {}
+
+TrestleActiveStorage.functions = {}
 
 TrestleActiveStorage.data = {
     initalized:            false,
@@ -9,30 +10,8 @@ TrestleActiveStorage.data = {
     existingPreview:       null,
 }
 
-TrestleActiveStorage.insertAfter = (existingElement, newElement) => {
-    existingElement.parentNode.insertBefore(newElement, existingElement.nextSibling)
-}
-
-TrestleActiveStorage.attachEvents = (field) => {
-    let progressEl    = field.parentNode.querySelectorAll(".progress")[0]
-    let progressBarEl = field.parentNode.querySelectorAll(".progress-bar")[0]
-
-    // Reveal the progress bar
-    field.addEventListener("direct-upload:start", (event) => {
-        console.log("direct-upload:start")
-        progressEl.style = "display: block"
-    })
-    
-    // Increment the progress bar
-    field.addEventListener("direct-upload:progress", (event) => {
-        console.log("direct-upload:progress")
-        let detail = event.detail
-        progressBarEl.style = "width: " + detail.progress + "%"
-    })
-}
-
-TrestleActiveStorage.clearExistingPreview = () => {
-    let ep = TrestleActiveStorage.existingPreview
+TrestleActiveStorage.functions.clearExistingPreview = () => {
+    let ep = TrestleActiveStorage.data.existingPreview
 
     if (!ep)                 { return }
     if (!ep.children.length) { return }
@@ -42,14 +21,14 @@ TrestleActiveStorage.clearExistingPreview = () => {
     }
 }
 
-TrestleActiveStorage.updateExistingPreview = (src, fileName) => {
-    let target = TrestleActiveStorage.existingPreview
+TrestleActiveStorage.functions.updateExistingPreview = (src, fileName) => {
+    let target = TrestleActiveStorage.data.existingPreview
 
     if (!target.classList.length) {
         debugger
     }
 
-    TrestleActiveStorage.clearExistingPreview()
+    TrestleActiveStorage.functions.clearExistingPreview()
 
     let imgElement = document.createElement("img")
     imgElement.src = src
@@ -57,15 +36,13 @@ TrestleActiveStorage.updateExistingPreview = (src, fileName) => {
     let nameElement = document.createElement("small")
     nameElement.innerText = fileName
 
-    // let previewContainer = document.createElement("div")
-    // previewContainer.classList.add("active-storage__upload-preview")
     target.classList.add("active-storage__upload-preview")
     target.appendChild(imgElement) 
     target.appendChild(nameElement) 
 }
 
-TrestleActiveStorage.createNewPreview = (src, fileName) => {
-    let target = TrestleActiveStorage.currentWrapperDiv
+TrestleActiveStorage.functions.createNewPreview = (src, fileName) => {
+    let target = TrestleActiveStorage.data.currentWrapperDiv
     
     if (!target.classList.length) {
         debugger
@@ -86,102 +63,84 @@ TrestleActiveStorage.createNewPreview = (src, fileName) => {
 }
 
 TrestleActiveStorage.onFileInputChangeHandler = (event1) => {
-    // debugger
-    
     if (event1?.target?.files?.length != 1) {
         return
     }
     
     let file = event1.target.files[0]
-    TrestleActiveStorage.currentFileName       = file.name
-    TrestleActiveStorage.currentFileInputField = event1.target
-    TrestleActiveStorage.currentWrapperDiv     = event1.target.parentElement
-    TrestleActiveStorage.existingPreview       = event1.target.parentElement.querySelector(".active-storage__preview")
+    TrestleActiveStorage.data.currentFileName       = file.name
+    TrestleActiveStorage.data.currentFileInputField = event1.target
+    TrestleActiveStorage.data.currentWrapperDiv     = event1.target.parentElement
+    TrestleActiveStorage.data.existingPreview       = event1.target.parentElement.querySelector(".active-storage__preview")
 
     let reader = new FileReader()
 
     reader.onload = (event2) => {
-        let fileSrc = event2.target.result
-        if (TrestleActiveStorage.existingPreview) {
-            TrestleActiveStorage.updateExistingPreview(fileSrc, TrestleActiveStorage.currentFileName)
+        let fileSrc  = event2.target.result
+        let fileName = TrestleActiveStorage.data.currentFileName
+
+        if (TrestleActiveStorage.data.existingPreview) {
+            TrestleActiveStorage.functions.updateExistingPreview(fileSrc, fileName)
         } else {
-            TrestleActiveStorage.createNewPreview(fileSrc, TrestleActiveStorage.currentFileName)
+            TrestleActiveStorage.functions.createNewPreview(fileSrc, fileName)
         }
-        TrestleActiveStorage.existingPreview       = null
-        TrestleActiveStorage.currentFileName       = null
-        TrestleActiveStorage.currentFileInputField = null
-        TrestleActiveStorage.currentWrapperDiv     = null
+
+        TrestleActiveStorage.data.existingPreview       = null
+        TrestleActiveStorage.data.currentFileName       = null
+        TrestleActiveStorage.data.currentFileInputField = null
+        TrestleActiveStorage.data.currentWrapperDiv     = null
     }
-    reader.onerror = (error) => { console.error(error) }
+
+    reader.onerror = (error) => { 
+        console.error(error) 
+    }
+
     reader.readAsDataURL(file)
 }
 
-// Kick things off
-TrestleActiveStorage.attachEventHandlers = () => {
+TrestleActiveStorage.functions.attachEventHandlers = () => {
     let fields = document.querySelectorAll(".active-storage__field")
-    if (fields.length) {
-        fields.forEach((field) => {
-            // if (existingPreview) {
-            //     // field.parentElement.querySelector(".active-storage__preview").removeChild(field.parentElement.querySelector(".active-storage__preview").children[0])
-            //     while (existingPreview.firstChild) {
-            //         existingPreview.removeChild(existingPreview.firstChild)
-            //     }
-            // }
-            field.addEventListener("change", TrestleActiveStorage.onFileInputChangeHandler)
-            // field.addEventListener("change", (event1) => {
-            //     TrestleActiveStorage.existingPreview = field.parentElement.querySelector(".active-storage__preview")
-            //     if (event1?.target?.files?.length == 1) {
-            //         let reader = new FileReader()
-            //         let file   = event1.target.files[0]
-            //         TrestleActiveStorage.currentFileName = file.name
-            //         reader.onload = (event2) => {
-            //             let fileSrc = event2.target.result
-            //             if (TrestleActiveStorage.existingPreview) {
-            //                 let ep = TrestleActiveStorage.existingPreview
-            //                 while (ep.firstChild) {
-            //                     ep.removeChild(ep.firstChild)
-            //                 }
-            //                 TrestleActiveStorage.addUploadPreview(ep, fileSrc, TrestleActiveStorage.currentFileName)
-            //             } else {
-            //                 TrestleActiveStorage.insertAfter(field, fileSrc, TrestleActiveStorage.currentFileName)
-            //             }
-            //             // debugger
-            //             // let nextSibling = field.nextElementSibling
-            //             // if (nextSibling && nextSibling.classList.contains("active-storage__upload-preview")) {
-            //                 // nextSibling.remove()
-            //             // }
-            //             // TrestleActiveStorage.existingPreview = null
-            //             TrestleActiveStorage.currentFileName = null
-            //         }
-            //         reader.onerror = (error) => { console.error(error) }
-            //         reader.readAsDataURL(file)
-            //     }
-            // })
-            
-        })
+
+    if (!fields.length) {
+        return
     }
 
-    // for (var i = 0; i < fields.length; i++) {
-    //     TrestleActiveStorage.attachEvents(fields[i])
-    // }
+    fields.forEach((field) => {
+        field.addEventListener("change", TrestleActiveStorage.onFileInputChangeHandler)
+    })
 }
 
-TrestleActiveStorage.init = () => {
-    TrestleActiveStorage.initalized = true
-}
+// TrestleActiveStorage.attachEvents = (field) => {
+//     let progressEl    = field.parentNode.querySelectorAll(".progress")[0]
+//     let progressBarEl = field.parentNode.querySelectorAll(".progress-bar")[0]
+// 
+//     // Reveal the progress bar
+//     field.addEventListener("direct-upload:start", (event) => {
+//         console.log("direct-upload:start")
+//         progressEl.style = "display: block"
+//     })
+    // 
+//     // Increment the progress bar
+//     field.addEventListener("direct-upload:progress", (event) => {
+//         console.log("direct-upload:progress")
+//         let detail = event.detail
+//         progressBarEl.style = "width: " + detail.progress + "%"
+//     })
+// }
+
 
 // Load the code
 Trestle.ready(() => {
     console.log("Trestle.ready()")
-    console.log("Custom 'trestle-active_storage' loaded")
+    // console.log("Custom 'trestle-active_storage' loaded")
     // window.TrestleActiveStorage = TrestleActiveStorage
-    // window.TrestleActiveStorage.init()
-    // TrestleActiveStorage.attachEventHandlers()
+    // TrestleActiveStorage.functions.attachEventHandlers()
 })
 
 Trestle.init(() => {
     console.log("Trestle.init()")
-
+    console.log(`TrestleActiveStorage.data.initalized: ${TrestleActiveStorage.data.initalized}`)
+    TrestleActiveStorage.functions.attachEventHandlers()
 })
 
 // When the page first loads or is manually refreshed.
@@ -195,5 +154,5 @@ $(function() {
 document.addEventListener("turbolinks:load", () => {
     console.log("turbolinks:load")
     // window.TrestleActiveStorage = TrestleActiveStorage
-    // TrestleActiveStorage.attachEventHandlers()
+    // TrestleActiveStorage.functions.attachEventHandlers()
 })

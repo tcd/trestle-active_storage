@@ -13,7 +13,9 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                 // Array.from(input.files).forEach(file => uploadFile(file))
                 // you might clear the selected files from the input
                 // input.value = null
-                debugger
+                if (event?.target?.files?.length == 0) {
+                    debugger
+                }
               })
         })
     }

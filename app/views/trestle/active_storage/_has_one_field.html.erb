@@ -1,13 +1,13 @@
 <style>
     .active-storage__upload-preview {
-        /* text-align: center; */
+        text-align: center;
     }
     .active-storage__upload-preview img {
         max-width: 100%;
-        padding-left: 25px;
-        padding-right: 25px;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-left:   23px;
+        padding-right:  23px;
+        padding-top:     5px;
+        padding-bottom:  5px;
     }
 </style>
 
@@ -43,5 +43,10 @@
         <div class="progress-bar progress-bar-striped active"></div>
     </div>
 
-    <%= builder.raw_file_field(field_name, class: 'active-storage__field', direct_upload: true) %>
+    <%= builder.raw_file_field(
+        field_name, 
+        class: 'active-storage__field', 
+        direct_upload: true,
+        onchange: "TrestleActiveStorage.onFileInputChangeHandler(event)",
+    ) %>
 </div>

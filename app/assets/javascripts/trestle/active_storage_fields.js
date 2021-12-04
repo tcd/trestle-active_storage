@@ -24,9 +24,7 @@ TrestleActiveStorage.functions.clearExistingPreview = () => {
 TrestleActiveStorage.functions.updateExistingPreview = (src, fileName) => {
     let target = TrestleActiveStorage.data.existingPreview
 
-    if (!target.classList.length) {
-        debugger
-    }
+    if (!target.classList.length) { debugger }
 
     TrestleActiveStorage.functions.clearExistingPreview()
 
@@ -44,9 +42,7 @@ TrestleActiveStorage.functions.updateExistingPreview = (src, fileName) => {
 TrestleActiveStorage.functions.createNewPreview = (src, fileName) => {
     let target = TrestleActiveStorage.data.currentWrapperDiv
     
-    if (!target.classList.length) {
-        debugger
-    }
+    if (!target.classList.length) { debugger }
 
     let imgElement = document.createElement("img")
     imgElement.src = src
@@ -63,9 +59,7 @@ TrestleActiveStorage.functions.createNewPreview = (src, fileName) => {
 }
 
 TrestleActiveStorage.onFileInputChangeHandler = (event1) => {
-    if (event1?.target?.files?.length != 1) {
-        return
-    }
+    if (event1?.target?.files?.length != 1) { return }
     
     let file = event1.target.files[0]
     TrestleActiveStorage.data.currentFileName       = file.name
@@ -98,17 +92,15 @@ TrestleActiveStorage.onFileInputChangeHandler = (event1) => {
     reader.readAsDataURL(file)
 }
 
-TrestleActiveStorage.functions.attachEventHandlers = () => {
-    let fields = document.querySelectorAll(".active-storage__field")
+// TrestleActiveStorage.functions.attachEventHandlers = () => {
+//     let fields = document.querySelectorAll(".active-storage__field")
 
-    if (!fields.length) {
-        return
-    }
+//     if (!fields.length) { return }
 
-    fields.forEach((field) => {
-        field.addEventListener("change", TrestleActiveStorage.onFileInputChangeHandler)
-    })
-}
+//     fields.forEach((field) => {
+//         field.addEventListener("change", TrestleActiveStorage.onFileInputChangeHandler)
+//     })
+// }
 
 // TrestleActiveStorage.attachEvents = (field) => {
 //     let progressEl    = field.parentNode.querySelectorAll(".progress")[0]
@@ -119,7 +111,7 @@ TrestleActiveStorage.functions.attachEventHandlers = () => {
 //         console.log("direct-upload:start")
 //         progressEl.style = "display: block"
 //     })
-    // 
+// 
 //     // Increment the progress bar
 //     field.addEventListener("direct-upload:progress", (event) => {
 //         console.log("direct-upload:progress")
@@ -129,30 +121,6 @@ TrestleActiveStorage.functions.attachEventHandlers = () => {
 // }
 
 
-// Load the code
-Trestle.ready(() => {
-    console.log("Trestle.ready()")
-    // console.log("Custom 'trestle-active_storage' loaded")
-    // window.TrestleActiveStorage = TrestleActiveStorage
-    // TrestleActiveStorage.functions.attachEventHandlers()
-})
-
-Trestle.init(() => {
-    console.log("Trestle.init()")
-    console.log(`TrestleActiveStorage.data.initalized: ${TrestleActiveStorage.data.initalized}`)
-    TrestleActiveStorage.functions.attachEventHandlers()
-})
-
-// When the page first loads or is manually refreshed.
-$(function() {
-    console.log("$(function() {})")
-    // Collapse sidebar sections whenever the page reloads.
-    // collapseAppNav()
-})
-
-// On navigation or any page refresh.
-document.addEventListener("turbolinks:load", () => {
-    console.log("turbolinks:load")
-    // window.TrestleActiveStorage = TrestleActiveStorage
-    // TrestleActiveStorage.functions.attachEventHandlers()
-})
+// Trestle.init(() => {
+//     TrestleActiveStorage.functions.attachEventHandlers()
+// })

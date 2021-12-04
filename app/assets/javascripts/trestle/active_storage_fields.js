@@ -58,19 +58,19 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
         fields.forEach((field, i) => {
             // let newClassName = `active-storage__field__${i}`
             // field.classList.add(newClassName)
-            field.addEventListener("change", (event) => {
-                if (event?.target?.files?.length == 1) {
+            field.addEventListener("change", (event1) => {
+                if (event1?.target?.files?.length == 1) {
                     let reader = new FileReader()
-                    let file = event.target.files[0]
-                    var fileName = file.name
+                    let file = event1.target.files[0]
                     console.log(fileName)
-                    reader.onload = function (event) {
+                    debugger
+                    reader.onload = function (event2) {
                         debugger
                         let nextSibling = field.nextElementSibling
                         if (nextSibling && nextSibling.classList.contains("active-storage__upload-preview")) {
                             nextSibling.remove()
                         }
-                        let fileContent = event.target.result
+                        let fileContent = event2.target.result
                         let preview = TRESTLE_ACTIVE_STORAGE.buildUploadPreview(fileContent)
                         TRESTLE_ACTIVE_STORAGE.insertAfter(field, preview)
                         // debugger

@@ -1,8 +1,13 @@
 <style>
-    .active-storage__upload-preview, :after, :before {
-        box-sizing: border-box;
+    .active-storage__upload-preview img {
+        max-width: 100%;
+        padding-left: 45px;
+        padding-right: 45px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 </style>
+
 <div class="active-storage">
 
     <% if attachment.attached? && builder.object.persisted? %>

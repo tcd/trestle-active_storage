@@ -5,6 +5,16 @@ TRESTLE_ACTIVE_STORAGE.insertAfter = (existingElement, newElement) => {
     existingElement.parentNode.insertBefore(newElement, existingElement.nextSibling)
 }
 
+TRESTLE_ACTIVE_STORAGE.buildUploadPreview = (src) => {
+    let preview = document.createElement("img")
+    preview.src = fileContent
+    let previewContainer = document.createElement("div")
+    previewContainer.classList.add("active-storage__preview")
+    previewContainer.classList.add("active-storage__upload-preview")
+    previewContainer.appendChild(preview) 
+    return previewContainer
+}
+
 // For each `.active-storage__field`
 TRESTLE_ACTIVE_STORAGE.attachEvents = (field) => {
     let progressEl    = field.parentNode.querySelectorAll(".progress")[0]
@@ -54,12 +64,8 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                     let file = event.target.files[0]
                     reader.onload = (event) => {
                         let fileContent = event.target.result
-                        let preview = document.createElement("img")
-                        preview.src = fileContent
-                        let previewContainer = document.createElement("div")
-                        previewContainer.classList.add("active-storage__upload-preview")
-                        previewContainer.appendChild(preview)
-                        TRESTLE_ACTIVE_STORAGE.insertAfter(field, previewContainer)
+                        let preview = TRESTLE_ACTIVE_STORAGE.buildUploadPreview(fileContent)
+                        TRESTLE_ACTIVE_STORAGE.insertAfter(field, preview)
                         // debugger
                     }
                     reader.onerror = (error) => { console.error(error) }

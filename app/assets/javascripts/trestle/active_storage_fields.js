@@ -66,7 +66,7 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                         let fileContent = event.target.result
                         let preview = TRESTLE_ACTIVE_STORAGE.buildUploadPreview(fileContent)
                         TRESTLE_ACTIVE_STORAGE.insertAfter(field, preview)
-                        // debugger
+                        debugger
                     }
                     reader.onerror = (error) => { console.error(error) }
                     reader.readAsDataURL(file)

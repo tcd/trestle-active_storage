@@ -59,8 +59,8 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                         let previewContainer = document.createElement("div")
                         previewContainer.classList.add("active-storage__upload-preview")
                         previewContainer.appendChild(preview)
-                        TRESTLE_ACTIVE_STORAGE.insertAfter(event.target, previewContainer)
-                        // debugger
+                        // TRESTLE_ACTIVE_STORAGE.insertAfter(event.target, previewContainer)
+                        debugger
                     }
                     reader.onerror = (error) => { console.error(error) }
                     reader.readAsDataURL(file)

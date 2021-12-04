@@ -1,6 +1,6 @@
-require_relative 'active_storage/version'
+require_relative "active_storage/version"
 
-require 'trestle'
+require "trestle"
 
 module Trestle
   module ActiveStorage
@@ -12,4 +12,4 @@ module Trestle
   end
 end
 
-require_relative 'active_storage/engine' if defined?(Rails)
+require_relative "active_storage/engine" if defined?(Rails)

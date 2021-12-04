@@ -7,7 +7,7 @@ TRESTLE_ACTIVE_STORAGE.insertAfter = (existingElement, newElement) => {
 
 TRESTLE_ACTIVE_STORAGE.buildUploadPreview = (src) => {
     let preview = document.createElement("img")
-    preview.src = fileContent
+    preview.src = src
     let previewContainer = document.createElement("div")
     previewContainer.classList.add("active-storage__preview")
     previewContainer.classList.add("active-storage__upload-preview")

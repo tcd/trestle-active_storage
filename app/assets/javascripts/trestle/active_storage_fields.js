@@ -9,37 +9,12 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
         fields.forEach((field, i) => {
             let newClassName = `active-storage__field__${i}`
             field.classList.add(newClassName)
-            let progressEl    = field.parentNode.querySelectorAll(".progress")[0]
-            let progressBarEl = field.parentNode.querySelectorAll(".progress-bar")[0]
-        
-            // Reveal the progress bar
-            field.addEventListener("direct-upload:start", (event) => {
-                console.log("direct-upload:start")
-                progressEl.style = "display: block"
-            })
-            
-            // Increment the progress bar
-            field.addEventListener("direct-upload:progress", (event) => {
-                console.log("direct-upload:progress")
-                let detail = event.detail
-                progressBarEl.style = "width: " + detail.progress + "%"
-            })
-            
-            
-            field.addEventListener("direct-upload:before-blob-request", (event) => {
-                console.log("direct-upload:before-blob-request")
-                console.log(event)
-            })
-            
-            field.addEventListener("direct-upload:before-storage-request", (event) => {
-                console.log("direct-upload:before-storage-request")
-                console.log(event)
-            })
-        
-            field.addEventListener("direct-upload:end", (event) => {
-                console.log("direct-upload:end")
-                console.log(event)
-            })
+            field.addEventListener("change", (event) => {
+                // Array.from(input.files).forEach(file => uploadFile(file))
+                // you might clear the selected files from the input
+                // input.value = null
+                debugger
+              })
         })
     }
 

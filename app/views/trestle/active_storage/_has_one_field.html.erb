@@ -1,4 +1,10 @@
+<style>
+    .active-storage__upload-preview, :after, :before {
+        box-sizing: border-box;
+    }
+</style>
 <div class="active-storage">
+
     <% if attachment.attached? && builder.object.persisted? %>
         <div class="active-storage__preview">
             <% if attachment.previewable? %>
@@ -25,7 +31,7 @@
         <%= builder.check_box("delete_#{field_name}", label: "Delete #{field_name}") %>
     <% end %>
 
-    <div class="progress" style="display: none">
+    <div class="progress d-none">
         <div class="progress-bar progress-bar-striped active"></div>
     </div>
 

@@ -54,7 +54,7 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                     let file = event.target.files[0]
                     reader.onload = (event) => {
                         let fileContent = event.target.result
-                        let preview = document.createElement("image")
+                        let preview = document.createElement("img")
                         preview.src = fileContent
                         let previewContainer = document.createElement("div")
                         previewContainer.classList.add("active-storage__upload-preview")

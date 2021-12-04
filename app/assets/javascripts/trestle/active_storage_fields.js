@@ -10,11 +10,17 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
             let newClassName = `active-storage__field__${i}`
             field.classList.add(newClassName)
             field.addEventListener("change", (event) => {
-                // Array.from(input.files).forEach(file => uploadFile(file))
-                // you might clear the selected files from the input
-                // input.value = null
                 if (event?.target?.files?.length == 1) {
-                    debugger
+                    let reader = new FileReader()
+                    let file = event.target.files[0]
+                    reader.onload = (event) => {
+                        let fileContent = event.target.result
+                        debugger
+                    }
+                    reader.onerror = (error) => {
+                        console.error(error)
+                    }
+                    reader.readAsDataURL(file)
                 }
               })
         })

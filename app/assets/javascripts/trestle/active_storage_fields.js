@@ -64,7 +64,7 @@ TRESTLE_ACTIVE_STORAGE.init = () => {
                     let file = event.target.files[0]
                     reader.onload = (event) => {
                         let nextSibling = field.nextElementSibling
-                        if (nextSibling && nextElementSibling.classList.contains("active-storage__upload-preview")) {
+                        if (nextSibling && nextSibling.classList.contains("active-storage__upload-preview")) {
                             nextSibling.remove()
                         }
                         let fileContent = event.target.result
